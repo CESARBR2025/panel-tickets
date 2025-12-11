@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TechnicalIncident {
+   id        Int      @id @default(autoincrement())
+  title           String
+  description     String
+  category        String?           // Opcional
+  subcategory     String?           // Opcional
+  priority        String?           // Baja, Media, Alta
+  status          String    @default("Abierto") // Abierto por defecto
+  affected_system String?           // Sistema afectado
+  root_cause      String?           // Causa raíz
+  resolution      String?           // Resolución aplicada
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  location        String?           // Ubicación
+  device_id       String?           // ID del dispositivo
+  created_by      String?           // Usuario que creó el registro
+  last_updated_by String?           // Usuario que actualizó por última vez
+
+  @@map("technical_incidents")       // Mapear al nombre exacto de tabla en PostgreSQL
+}
