@@ -1,4 +1,4 @@
-import IncidentListPage from '../app/indicents/page';
+import IncidentListPage from './incidents/page';
 
 export default function Home() {
   return <IncidentListPage />;
