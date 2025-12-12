@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function CreateIncidentPage() {
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('Media');
@@ -28,10 +30,17 @@ export default function CreateIncidentPage() {
         setMessage(data.message || 'Error al crear incidente');
       } else {
         setMessage('Incidente creado con éxito!');
+
+        // Limpiar campos
         setTitle('');
         setDescription('');
         setPriority('Media');
         setStatus('Abierto');
+
+        // Redirigir a la página raíz después de un pequeño delay (opcional)
+        setTimeout(() => {
+          router.push('/'); // redirige a "/"
+        }, 500); // 0.5s para que el usuario vea el mensaje
       }
     } catch (err) {
       setMessage('Error de conexión con el servidor');
@@ -39,7 +48,6 @@ export default function CreateIncidentPage() {
       setLoading(false);
     }
   };
-
   return (
     <div className="max-w-md mx-auto mt-10 p-4 bg-white rounded shadow">
       <h1 className="text-xl font-bold mb-4">Registrar Incidente</h1>
