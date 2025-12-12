@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../libs/prisma';
 
-//Multiples notas
 export async function GET() {
   try {
     const notes = await prisma.technicalIncident.findMany();
     return NextResponse.json(notes);
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
-    }
+    console.error('Error al obtener incidentes:', error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : 'Error desconocido' },
+      { status: 500 }
+    );
   }
 }
 
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newIncident);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json(
       { message: (error as Error).message },
       { status: 500 }

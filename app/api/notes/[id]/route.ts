@@ -3,9 +3,9 @@ import { prisma } from '@/libs/prisma';
 
 export async function GET(
   request: Request,
-  context: { params: Promise<{ id: string }> } // <- params como Promise
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await context.params; // desestructurar después de await
+  const { id } = await context.params;
 
   const incident = await prisma.technicalIncident.findUnique({
     where: { id: Number(id) },
