@@ -106,26 +106,24 @@ export default function IncidentListPage() {
   if (loading) return <p className="text-center mt-10">Cargando...</p>;
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl">
-      <div className="flex justify-between">
-        <div>
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">
-            Listado de Incidentes
-          </h1>
-        </div>
+    <div className="max-w-full sm:max-w-3xl lg:max-w-5xl mx-auto mt-10 p-4 sm:p-6 bg-white shadow-lg rounded-2xl">
+      {/* Header con título y botón Crear */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 sm:gap-0">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          Listado de Incidentes
+        </h1>
 
-        <div>
-          <Link
-            href="/incidents/create"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition"
-          >
-            Crear
-          </Link>
-        </div>
+        <Link
+          href="/incidents/create"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition text-center"
+        >
+          Crear
+        </Link>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-        <table className="w-full text-left">
+      {/* Tabla responsive */}
+      <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table className="w-full text-left min-w-[600px]">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="p-3 font-semibold">Título</th>
@@ -139,74 +137,72 @@ export default function IncidentListPage() {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {incidents.map((inc) => {
-              return (
-                <tr key={inc.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="p-3 text-gray-800">{inc.title}</td>
-                  <td className="p-3 text-gray-600">{inc.description}</td>
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded-lg text-sm font-medium ${
-                        inc.priority === 'Alta'
-                          ? 'bg-red-100 text-red-700'
-                          : inc.priority === 'Media'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-green-100 text-green-700'
-                      }`}
-                    >
-                      {inc.priority}
-                    </span>
-                  </td>
+            {incidents.map((inc) => (
+              <tr key={inc.id} className="hover:bg-gray-50 transition-colors">
+                <td className="p-2 sm:p-3 text-gray-800">{inc.title}</td>
+                <td className="p-2 sm:p-3 text-gray-600">{inc.description}</td>
+                <td className="p-2 sm:p-3">
+                  <span
+                    className={`px-2 py-1 rounded-lg text-sm font-medium ${
+                      inc.priority === 'Alta'
+                        ? 'bg-red-100 text-red-700'
+                        : inc.priority === 'Media'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : 'bg-green-100 text-green-700'
+                    }`}
+                  >
+                    {inc.priority}
+                  </span>
+                </td>
 
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded-lg text-sm font-medium ${
-                        inc.status === 'Cerrado'
-                          ? 'bg-gray-200 text-gray-700'
-                          : inc.status === 'En progreso'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-orange-100 text-orange-700'
-                      }`}
-                    >
-                      {inc.status}
-                    </span>
-                  </td>
+                <td className="p-2 sm:p-3">
+                  <span
+                    className={`px-2 py-1 rounded-lg text-sm font-medium ${
+                      inc.status === 'Cerrado'
+                        ? 'bg-gray-200 text-gray-700'
+                        : inc.status === 'En progreso'
+                        ? 'bg-blue-100 text-blue-700'
+                        : 'bg-orange-100 text-orange-700'
+                    }`}
+                  >
+                    {inc.status}
+                  </span>
+                </td>
 
-                  <td className="p-3 text-gray-500">
-                    {typeof window !== 'undefined'
-                      ? new Date(inc.created_at).toLocaleString()
-                      : ''}
-                  </td>
+                <td className="p-2 sm:p-3 text-gray-500">
+                  {typeof window !== 'undefined'
+                    ? new Date(inc.created_at).toLocaleString()
+                    : ''}
+                </td>
 
-                  <td className="p-3">
-                    <select
-                      value={inc.status}
-                      onChange={(e) => changeStatus(inc.id, e.target.value)}
-                      className="px-3 py-2 rounded-xl border border-gray-300 bg-white text-gray-700 shadow-sm focus:ring-2 focus:ring-indigo-400 outline-none transition"
-                    >
-                      <option value="Abierto">Abierto</option>
-                      <option value="En progreso">En progreso</option>
-                      <option value="Cerrado">Cerrado</option>
-                    </select>
-                  </td>
+                <td className="p-2 sm:p-3">
+                  <select
+                    value={inc.status}
+                    onChange={(e) => changeStatus(inc.id, e.target.value)}
+                    className="w-full sm:w-auto px-2 sm:px-3 py-1 sm:py-2 rounded-xl border border-gray-300 bg-white text-gray-700 shadow-sm focus:ring-2 focus:ring-indigo-400 outline-none transition"
+                  >
+                    <option value="Abierto">Abierto</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Cerrado">Cerrado</option>
+                  </select>
+                </td>
 
-                  <td className="flex gap-3 p-3">
-                    <button
-                      onClick={() => startEdit(inc)}
-                      className="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => deleteIncident(inc.id)}
-                      className="px-3 py-1 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                <td className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-2 sm:p-3">
+                  <button
+                    onClick={() => startEdit(inc)}
+                    className="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => deleteIncident(inc.id)}
+                    className="px-3 py-1 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
