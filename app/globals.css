@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+body {
+  @apply bg-gradient-to-b from-black via-sky-950 to-gray-800;
+}
