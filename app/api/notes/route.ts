@@ -15,13 +15,9 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    //Extraemos datos del body
     const body = await request.json();
-
-    //desestructuramos
     const { title, description, priority, affected_system } = body;
 
-    // Validación mínima
     if (!title || !description) {
       return NextResponse.json(
         { message: 'Title y description son obligatorios' },
@@ -33,16 +29,17 @@ export async function POST(request: Request) {
       data: {
         title,
         description,
-        priority: priority ?? 'Media', // valor por defecto si no viene
+        priority: priority ?? 'Media',
         affected_system: affected_system ?? null,
-        // status, created_at y updated_at se gestionan automáticamente
       },
     });
+
     return NextResponse.json(newIncident);
   } catch (error) {
     console.log(error);
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
-    }
+    return NextResponse.json(
+      { message: (error as Error).message },
+      { status: 500 }
+    );
   }
 }

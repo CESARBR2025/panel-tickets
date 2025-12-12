@@ -47,7 +47,7 @@ export default function IncidentListPage() {
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-4">
-      <h1 className="text-2xl font-bold mb-4">Listado de Incidentes</h1>
+      <h1 className="text-2xl font-bold mb-4">Listado de Incidentessss</h1>
       <table className="w-full border-collapse">
         <thead>
           <tr>
@@ -65,7 +65,9 @@ export default function IncidentListPage() {
               <td className="border p-2">{inc.priority}</td>
               <td className="border p-2">{inc.status}</td>
               <td className="border p-2">
-                {new Date(inc.created_at).toLocaleString()}
+                {typeof window !== 'undefined'
+                  ? new Date(inc.created_at).toLocaleString()
+                  : ''}
               </td>
               <td className="border p-2">
                 <select
