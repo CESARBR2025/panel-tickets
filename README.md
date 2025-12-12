@@ -39,6 +39,35 @@ Este proyecto es un **panel de gestión de incidentes técnicos** desarrollado c
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
+git https://github.com/CESARBR2025/panel-tickets.git
 cd tu-repo
+
+
+```
+
+1. Instalar dependencias:
+
+```bash
+npm install
+```
+
+3. Configurar variable de entorno
+
+```bash
+DATABASE_URL y DATABASE_URL
+```
+
+4. Generar el cliente de Prisma y aplicar migraciones
+
+```bash
+npx prisma generate
+npx prisma migrate dev --name init
+```
+
+5. Ejecutar la app en modo dev
+
+```bash
+npm run dev
+# o con yarn
+yarn dev
 ```
